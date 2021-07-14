@@ -44,13 +44,21 @@ if(inp_1==6 or inp_1<0 or inp_1>6):
     sys.exit()
     
 elif(inp_1==1):    
-    print("Please enter the below details to add student details:  \n 1. Name \n 2. Department \n 3. Tamil Mark \n 4. English Mark \n 5. Maths Mark \n 6. Science Mark \n 7. Social Science Mark ")
-    inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G=input().split()
-    inp_C=int(inp_C)
-    inp_D=int(inp_D)
-    inp_E=int(inp_E)
-    inp_F=int(inp_F)
-    inp_G=int(inp_G)
+ #   print("Please enter the below details to add student details:  \n 1. Name \n 2. Department \n 3. Tamil Mark \n 4. English Mark \n 5. Maths Mark \n 6. Science Mark \n 7. Social Science Mark ")
+ #   inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G=input().split()
+ #   inp_C=int(inp_C)
+ #   inp_D=int(inp_D)
+ #   inp_E=int(inp_E)
+ #   inp_F=int(inp_F)
+ #   inp_G=int(inp_G)
+    inp_A=input("Enter the Name : ")
+    inp_B=input("Enter the Dept : ")
+    inp_C=int(input("Enter the Tamil Mark : "))
+    inp_D=int(input("Enter the English Mark : "))
+    inp_E=int(input("Enter the Maths Mark : "))
+    inp_F=int(input("Enter the Science Mark : "))
+    inp_G=int(input("Enter the S.Science Mark : "))
+
 
     totalmark=(inp_C+inp_D+inp_E+inp_F+inp_G)
     average=(inp_C+inp_D+inp_E+inp_F+inp_G)/5
