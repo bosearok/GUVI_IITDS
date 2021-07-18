@@ -23,6 +23,47 @@ def sql_insert(connection,inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G,totalmark,av
         connection.rollback()
         print("ERROR PRINING ", e)
 
+def sql_select(connection,student_id):
+    cursor=connection.cursor()
+    
+    if(student_id==-1):
+        cursor.execute("SELECT * FROM test.student_mark")
+    else:
+        sql="SELECT * FROM test.student_mark where StudId=%s"
+        data=[student_id]
+        cursor.execute(sql,data)
+    myresult = cursor.fetchall()
+    for x in myresult:
+        print(x)
+
+def sql_update(connection,inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G,totalmark,average,gradeper,inp_H):
+    try:
+        cursor=connection.cursor()
+        sql="update test.student_mark set NAME=%s,department=%s,mark1=%s,mark2=%s,mark3=%s,mark4=%s,mark5=%s,totalmark=%s,average=%s,grade=%s where StudId=%s"
+        data=[inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G,totalmark,average,gradeper,inp_H]
+        cursor.execute(sql,data)
+        connection.commit()
+        connection.close()
+        print("DETAILS UPDATED for ",inp_H)
+
+    except Error as e:
+        connection.rollback()
+        print("ERROR Updating ", e)
+
+def sql_delete(connection,inp_H):
+    try:
+        cursor=connection.cursor()
+        sql="delete from test.student_mark  where StudId=%s"
+        data=[inp_H]
+        cursor.execute(sql,data)
+        connection.commit()
+        connection.close()
+        print("DETAILS DELETED for ",inp_H)
+
+    except Error as e:
+        connection.rollback()
+        print("ERROR PRINING ", e)        
+
 def grade(average):
     if(average>=95):
         return "A+"
@@ -44,13 +85,7 @@ if(inp_1==6 or inp_1<0 or inp_1>6):
     sys.exit()
     
 elif(inp_1==1):    
- #   print("Please enter the below details to add student details:  \n 1. Name \n 2. Department \n 3. Tamil Mark \n 4. English Mark \n 5. Maths Mark \n 6. Science Mark \n 7. Social Science Mark ")
- #   inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G=input().split()
- #   inp_C=int(inp_C)
- #   inp_D=int(inp_D)
- #   inp_E=int(inp_E)
- #   inp_F=int(inp_F)
- #   inp_G=int(inp_G)
+ 
     inp_A=input("Enter the Name : ")
     inp_B=input("Enter the Dept : ")
     inp_C=int(input("Enter the Tamil Mark : "))
@@ -58,15 +93,50 @@ elif(inp_1==1):
     inp_E=int(input("Enter the Maths Mark : "))
     inp_F=int(input("Enter the Science Mark : "))
     inp_G=int(input("Enter the S.Science Mark : "))
-
-
+ 
     totalmark=(inp_C+inp_D+inp_E+inp_F+inp_G)
     average=(inp_C+inp_D+inp_E+inp_F+inp_G)/5
     gradeper=grade(average)
     
-
     connection=sql_connection()
     sql_insert(connection,inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G,totalmark,average,gradeper)
+
+elif(inp_1==2):
+
+    inp_A=input(" Please Enter the Student Id : ")
+
+
+elif(inp_1==3):
+
+    print(" Getting All Student Details from DataBase ")
+
+    connection=sql_connection()
+    sql_select(connection,-1)
+
+elif(inp_1==4):     
+
+    inp_H=input("Enter Student Id : ")
+    inp_A=input("Enter the Name : ")
+    inp_B=input("Enter the Dept : ")
+    inp_C=int(input("Enter the Tamil Mark : "))
+    inp_D=int(input("Enter the English Mark : "))
+    inp_E=int(input("Enter the Maths Mark : "))
+    inp_F=int(input("Enter the Science Mark : "))
+    inp_G=int(input("Enter the S.Science Mark : "))
+ 
+    totalmark=(inp_C+inp_D+inp_E+inp_F+inp_G)
+    average=(inp_C+inp_D+inp_E+inp_F+inp_G)/5
+    gradeper=grade(average)
+    
+    connection=sql_connection()
+    sql_update(connection,inp_A,inp_B,inp_C,inp_D,inp_E,inp_F,inp_G,totalmark,average,gradeper,inp_H)
+
+elif(inp_1==5):     
+
+    inp_H=input("Enter Student Id to Delete : ")
+    connection=sql_connection()
+    sql_delete(connection,inp_H)
+
 
 else:
     print("exit")
